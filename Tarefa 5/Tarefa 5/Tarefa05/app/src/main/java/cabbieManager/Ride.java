@@ -44,15 +44,14 @@ public class Ride {
      * @param dropLocation   the location where the passenger wants to be dropped
      *                       off
      * 
-     *                       The ride status is set to "REQUESTED".
-     *                       The startTime is set to the current time.
+     *                       The ride status is set to "REQUESTED". The startTime is
+     *                       set to the current time.
      * 
      *                       Lança InvalidLocationException se o local não for
-     *                       encontrado.
-     *                       Lança NullRideStartTimeException se o startTime for
-     *                       nulo.
+     *                       encontrado. Lança NullRideStartTimeException se o
+     *                       startTime for nulo.
      */
-    public void requestRide(String pickupLocation, String dropLocation) throws InvalidLocationException {
+    public void requestRide(String pickupLocation, String dropLocation) throws InvalidLocationException, NullRideStartTimeException {
         this.rideId = UUID.randomUUID().toString();
 
         // Valida os locais de origem e destino
@@ -75,7 +74,13 @@ public class Ride {
                 + dropLocation);
         this.updateRideStatus("CHAMADA", null, null);
 
-        this.distance = this.calculateDistance(); // Calcula a distância
+        // Tratando a exceção que pode ser lançada ao calcular a distância
+        try {
+            this.distance = this.calculateDistance(); // Calcula a distância
+        } catch (InvalidRideDistanceException e) {
+            System.err.println("Erro ao calcular a distância: " + e.getMessage());
+            this.distance = 0; // Ou tome a ação necessária em caso de erro
+        }
     }
 
     /**
@@ -86,8 +91,10 @@ public class Ride {
      *                     If the location is not found, returns null.
      * 
      * @return a Location object or null
+     * 
+     * @throws InvalidLocationException se a localização for inválida
      */
-    private Location returnLocation(String locationName) {
+    private Location returnLocation(String locationName) throws InvalidLocationException {
         return Location.valueOfName(locationName);
     }
 

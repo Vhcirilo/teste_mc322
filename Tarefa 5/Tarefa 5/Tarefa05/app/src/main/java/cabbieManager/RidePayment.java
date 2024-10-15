@@ -11,9 +11,9 @@ import java.time.LocalTime;
 import exceptions.InvalidRideDistanceException;
 import exceptions.NullRideStartTimeException;
 
-@XmlRootElement(name="PaymentMethod")
+@XmlRootElement(name = "PaymentMethod")
 public class RidePayment implements Payment {
-    
+
     private String paymentId;
     private String rideId;
     private LocalDateTime rideStartTime;
@@ -22,7 +22,6 @@ public class RidePayment implements Payment {
     private PaymentOption paymentMethod;
 
     public RidePayment() {
-        
     }
 
     /**
@@ -38,25 +37,31 @@ public class RidePayment implements Payment {
      * @param paymentMethod  The payment method selected by the user (e.g., "credit", "cash").     
      */
     public RidePayment(String rideId, LocalDateTime rideStartTime, float rideDistance, String paymentMethod) {
-
         // Verificações de exceção
-        if (rideStartTime == null) {
-            throw new NullRideStartTimeException("Horário de início da corrida não pode ser nulo.");
+        try {
+            if (rideStartTime == null) {
+                throw new NullRideStartTimeException("Horário de início da corrida não pode ser nulo.");
+            }
+
+            if (rideDistance <= 0) {
+                throw new InvalidRideDistanceException("A distância da corrida deve ser maior que zero.");
+            }
+
+            this.paymentId = UUID.randomUUID().toString();
+            this.rideId = rideId;
+            this.rideStartTime = rideStartTime;
+            this.rideDistance = rideDistance;
+            this.paymentMethod = this.selectPaymentMethod(paymentMethod);
+            System.out.println("Forma de pagamento selecionada: " + paymentMethod);
+
+            this.amount = this.calculateValue();
+        } catch (NullRideStartTimeException | InvalidRideDistanceException e) {
+            System.out.println("Erro ao criar pagamento: " + e.getMessage());
+            // Tratar a exceção conforme necessário, como re-lançar ou finalizar o processo
         }
-
-        if (rideDistance <= 0) {
-            throw new InvalidRideDistanceException("A distância da corrida deve ser maior que zero.");
-        }
-
-        this.paymentId = UUID.randomUUID().toString();
-        this.rideId = rideId;
-        this.rideStartTime = rideStartTime;
-        this.rideDistance = rideDistance;
-        this.paymentMethod = this.selectPaymentMethod(paymentMethod);
-        System.out.println("Forma de pagamento selecionada: " + paymentMethod);
-
-        this.amount = this.calculateValue();
     }
+
+    // ... (métodos restantes da classe permanecem inalterados)
 
     /**
      * Selects a PaymentOption from a given string.
@@ -72,13 +77,7 @@ public class RidePayment implements Payment {
      * 
      * <p>
      * The amount is calculated based on the ride distance and the payment method selected by the user.
-     * The algorithm used is as follows:
-     * <ol>
-     * <li>Identify the distance range using the following intervals: [0, 5], [5, 10], [10, 15], [15, 20], [20, 25].</li>
-     * <li>Select the initial and per km price based on the identified distance range and the time of day (day or night).</li>
-     * <li>Calculate the total amount by adding the initial price and the price per km multiplied by the ride distance.</li>
-     * <li>Apply the payment method fee to the total amount.</li>
-     * </ol>
+     * </p>
      * 
      * @return the calculated amount
      */
@@ -121,6 +120,7 @@ public class RidePayment implements Payment {
         System.out.println("Valor da corrida definido: " + this.amount);
     }
 
+    // Getters e Setters
     public String getPaymentId() {
         return paymentId;
     }

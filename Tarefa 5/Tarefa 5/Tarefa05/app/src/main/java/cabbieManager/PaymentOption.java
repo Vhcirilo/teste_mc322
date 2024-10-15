@@ -8,7 +8,6 @@ public enum PaymentOption {
     VOUCHER("Voucher", 1.03f),
     PIX("Pix", 1.01f);
 
-
     private final String name;
     private final float fee;
 
@@ -24,14 +23,12 @@ public enum PaymentOption {
      */
     public static PaymentOption valueOfName(String name) {
         for (PaymentOption paymentOption : PaymentOption.values()) {
-            if (paymentOption.name.equals(name)) {
+            if (paymentOption.name.equalsIgnoreCase(name.trim())) {
                 return paymentOption;
             }
         }
-        return null;
+        return null; // Poderia lançar uma exceção aqui em vez de retornar null.
     }
-
-
 
     /**
      * Calculates the payment fee for a given value.
@@ -39,11 +36,7 @@ public enum PaymentOption {
      * @param value The value to calculate the fee for.
      * @return The calculated payment fee.
      */
-
     float calculatePaymentFee(float value) {
         return value * fee;
     }
-    
-
-
 }

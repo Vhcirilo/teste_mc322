@@ -22,7 +22,7 @@ import cabbieManager.Passenger;
 import cabbieManager.Ride;
 import cabbieManager.RidePayment;
 import cabbieManager.Vehicle;
-import exceptions.CabbieManagerException;
+// import exceptions.CabbieManagerException;
 import exceptions.UnsupportedObjectTypeException;
 
 @XmlRootElement(name = "database")
