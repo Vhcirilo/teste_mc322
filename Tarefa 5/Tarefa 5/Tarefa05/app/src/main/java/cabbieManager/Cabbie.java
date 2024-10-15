@@ -27,7 +27,7 @@ public class Cabbie extends Person {
         CabbieInfoGenerator cab = new CabbieInfoGenerator();
         this.name = cab.getName();
         this.email = cab.getEmail();
-        this.setPhone(cab.getPhone());
+        this.phone = cab.getPhone();
         this.cabbieId = cab.getCabbieId();
         this.rate = cab.getRate();
         this.licenseNumber = cab.getLicenseNumber();
