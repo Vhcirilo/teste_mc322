@@ -35,10 +35,11 @@ public class RidePayment implements Payment {
      * @param rideStartTime  The start time of the ride. Must not be {@code null}.
      * @param rideDistance   The distance traveled during the ride, in kilometers.
      * @param paymentMethod  The payment method selected by the user (e.g., "credit", "cash").     
+     * @throws NullRideStartTimeException 
+     * @throws InvalidRideDistanceException 
      */
-    public RidePayment(String rideId, LocalDateTime rideStartTime, float rideDistance, String paymentMethod) {
+    public RidePayment(String rideId, LocalDateTime rideStartTime, float rideDistance, String paymentMethod) throws NullRideStartTimeException, InvalidRideDistanceException {
         // Verificações de exceção
-        try {
             if (rideStartTime == null) {
                 throw new NullRideStartTimeException("Horário de início da corrida não pode ser nulo.");
             }
@@ -55,10 +56,7 @@ public class RidePayment implements Payment {
             System.out.println("Forma de pagamento selecionada: " + paymentMethod);
 
             this.amount = this.calculateValue();
-        } catch (NullRideStartTimeException | InvalidRideDistanceException e) {
-            System.out.println("Erro ao criar pagamento: " + e.getMessage());
-            // Tratar a exceção conforme necessário, como re-lançar ou finalizar o processo
-        }
+    
     }
 
     // ... (métodos restantes da classe permanecem inalterados)

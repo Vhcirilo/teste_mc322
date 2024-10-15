@@ -74,8 +74,8 @@ public class Database {
         return this.payments;
     }
 
-    public void insert(Object object) {
-        try {
+    public void insert(Object object) throws UnsupportedObjectTypeException {
+
             if (object instanceof Cabbie) {
                 this.cabbies.add((Cabbie) object);
             } else if (object instanceof Passenger) {
@@ -88,13 +88,11 @@ public class Database {
                 this.payments.add((RidePayment) object);
             } else {
                 throw new UnsupportedObjectTypeException(
-                        "Tipo de objeto não suportado: " + object.getClass().getName());
+                        "Trying to insert unsupported object type for database insertion");
             }
 
             this.save();
-        } catch (UnsupportedObjectTypeException e) {
-            e.printStackTrace(); // ou outro tratamento adequado
-        }
+        
     }
 
     private <T> void update(T newItem, List<T> data) {

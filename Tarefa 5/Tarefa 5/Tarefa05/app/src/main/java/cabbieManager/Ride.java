@@ -118,7 +118,7 @@ public class Ride {
         float distance = (float) Math.sqrt(Math.pow(x_drop - x_pickup, 2) + Math.pow(y_drop - y_pickup, 2));
         distance = Math.round(distance * 100) / 100.0f;
 
-        if (distance < 0) {
+        if (distance <= 0) {
             throw new InvalidRideDistanceException("A distância da corrida não pode ser zero ou negativa.");
         }
 
