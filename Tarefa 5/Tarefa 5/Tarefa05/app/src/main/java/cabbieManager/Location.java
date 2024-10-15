@@ -3,6 +3,8 @@ package cabbieManager;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;
 
+import exceptions.InvalidLocationException;
+
 @XmlType(name="location")
 @XmlEnum
 public enum Location {
@@ -32,14 +34,17 @@ public enum Location {
      * @param name the name of the location
      * @return the Location enum value of the given name
      */
-    public static Location valueOfName(String name) {
+    public static Location valueOfName(String name) throws InvalidLocationException {
         for (Location location : Location.values()) {
             if (location.name.equals(name)) {
                 return location;
             }
         }
-
+        throw new InvalidLocationException("Nenhuma localização encontrada com o nome: " + name);
     }
+    
+    
+    
 
 
     /**
