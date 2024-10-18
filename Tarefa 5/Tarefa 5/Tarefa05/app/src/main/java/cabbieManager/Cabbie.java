@@ -53,48 +53,42 @@ public class Cabbie extends Person {
      *
      *                 If the field is not valid, a message is printed and the field
      *                 is not updated.
+     * @throws InvalidPhoneNumberException 
      */
     @Override
-    public void update(String field, String newValue) {
+    public void update(String field, String newValue) throws IllegalArgumentException, InvalidPhoneNumberException {
         boolean validField = true;
 
-        try {
-            switch (field) {
-                case "name":
-                    this.name = newValue;
-                    break;
-                case "email":
-                    this.email = newValue;
-                    break;
-                case "phone":
-                    this.setPhone(newValue); // Valida o telefone
-                    break;
-                case "cabbieId":
-                    this.cabbieId = newValue;
-                    break;
-                case "rate":
-                    this.rate = Float.parseFloat(newValue); // Converte para float
-                    break;
-                case "licenseNumber":
-                    this.licenseNumber = newValue;
-                    break;
-                case "isBusy":
-                    this.isBusy = Boolean.parseBoolean(newValue); // Converte para boolean
-                    break;
-                default:
-                    validField = false;
-                    System.out.println("Campo inválido");
-                    break;
+        switch (field) {
+            case "name":
+                this.name = newValue;
+                break;
+            case "email":
+                this.email = newValue;
+                break;
+            case "phone":
+                this.setPhone(newValue); // Valida o telefone
+                break;
+            case "cabbieId":
+                this.cabbieId = newValue;
+                break;
+            case "rate":
+                this.rate = Float.parseFloat(newValue); // Converte para float
+                break;
+            case "licenseNumber":
+                this.licenseNumber = newValue;
+                break;
+            case "isBusy":
+                this.isBusy = Boolean.parseBoolean(newValue); // Converte para boolean
+                break;
+            default:
+                validField = false;
+                throw new IllegalArgumentException ("");
             }
 
             if (validField) {
                 System.out.println("Campo " + field + " foi atualizado com sucesso!");
             }
-        } catch (NumberFormatException e) {
-            System.out.println("Erro ao atualizar o campo '" + field + "': valor inválido.");
-        } catch (InvalidPhoneNumberException e) {
-            System.out.println("Erro ao atualizar o telefone: " + e.getMessage());
-        }
     }
 
     /**
@@ -154,9 +148,9 @@ public class Cabbie extends Person {
      *
      *              The phone number must contain only numeric characters.
      */
-    public void setPhone(String phone) throws InvalidPhoneNumberException {
+    public void setPhone(String phone) throws IllegalArgumentException {
         if (!phone.matches("\\d+")) {
-            throw new InvalidPhoneNumberException("Número de telefone deve conter apenas dígitos.");
+            throw new IllegalArgumentException("Input contains non-numeric characters: 999999999a");
         }
         this.phone = phone;
     }

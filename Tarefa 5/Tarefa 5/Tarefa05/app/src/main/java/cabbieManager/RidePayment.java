@@ -38,14 +38,14 @@ public class RidePayment implements Payment {
      * @throws NullRideStartTimeException 
      * @throws InvalidRideDistanceException 
      */
-    public RidePayment(String rideId, LocalDateTime rideStartTime, float rideDistance, String paymentMethod) throws NullRideStartTimeException, InvalidRideDistanceException {
+    public RidePayment(String rideId, LocalDateTime rideStartTime, float rideDistance, String paymentMethod) throws NullPointerException, InvalidRideDistanceException {
         // Verificações de exceção
             if (rideStartTime == null) {
-                throw new NullRideStartTimeException("Horário de início da corrida não pode ser nulo.");
+                throw new NullPointerException("Start time of the ride to be paid cannot be null");
             }
 
             if (rideDistance <= 0) {
-                throw new InvalidRideDistanceException("A distância da corrida deve ser maior que zero.");
+                throw new InvalidRideDistanceException("Ride distance must be greater than zero");
             }
 
             this.paymentId = UUID.randomUUID().toString();
