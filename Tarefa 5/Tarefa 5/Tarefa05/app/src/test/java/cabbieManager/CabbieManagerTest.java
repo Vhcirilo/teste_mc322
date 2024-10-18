@@ -1,5 +1,6 @@
 package cabbieManager;
 
+import exceptions.InvalidPaymentMethodException;
 // Import da exceção personalizada
 import exceptions.InvalidRideDistanceException;
 
@@ -63,20 +64,23 @@ public class CabbieManagerTest {
     }
 
     @Test
-    public void testDiurnalRideWithinRange() {
+    public void testDiurnalRideWithinRange()
+            throws NullPointerException, InvalidRideDistanceException, InvalidPaymentMethodException {
         RidePayment ridePayment = new RidePayment("rideId", LocalDateTime.of(2022, 1, 1, 10, 0), 5.0f, "Dinheiro");
         Assertions.assertEquals(15.00f, ridePayment.calculateValue(), 0);
     }
 
     @Test
-    public void testDiurnalRideWithinRange2() {
+    public void testDiurnalRideWithinRange2()
+            throws NullPointerException, InvalidRideDistanceException, InvalidPaymentMethodException {
         RidePayment ridePayment = new RidePayment("rideId", LocalDateTime.of(2022, 1, 1, 10, 0), 18.0f,
                 "Cartão de Débito");
         Assertions.assertEquals(78f, ridePayment.calculateValue(), 0);
     }
 
     @Test
-    public void testNocturnalRideWithinRange() {
+    public void testNocturnalRideWithinRange()
+            throws NullPointerException, InvalidRideDistanceException, InvalidPaymentMethodException {
         RidePayment ridePayment = new RidePayment("rideId", LocalDateTime.of(2022, 1, 1, 20, 0), 5.0f, "Dinheiro");
         Assertions.assertEquals(18.50f, ridePayment.calculateValue(), 0);
     }

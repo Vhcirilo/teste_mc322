@@ -51,7 +51,8 @@ public class Ride {
      *                       encontrado. Lança NullRideStartTimeException se o
      *                       startTime for nulo.
      */
-    public void requestRide(String pickupLocation, String dropLocation) throws InvalidLocationException, NullRideStartTimeException, IllegalArgumentException {
+    public void requestRide(String pickupLocation, String dropLocation)
+            throws InvalidLocationException, NullRideStartTimeException, IllegalArgumentException {
         this.rideId = UUID.randomUUID().toString();
 
         // Valida os locais de origem e destino

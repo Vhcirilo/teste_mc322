@@ -34,13 +34,13 @@ public enum Location {
      * @param name the name of the location
      * @return the Location enum value of the given name
      */
-    public static Location valueOfName(String name) throws InvalidLocationException {
+    public static Location valueOfName(String name) throws IllegalArgumentException {
         for (Location location : Location.values()) {
             if (location.name.equals(name)) {
                 return location;
             }
         }
-        throw new InvalidLocationException("Nenhuma localização encontrada com o nome: " + name);
+        throw new IllegalArgumentException("Invalid location name: " + name);
     }
     
     

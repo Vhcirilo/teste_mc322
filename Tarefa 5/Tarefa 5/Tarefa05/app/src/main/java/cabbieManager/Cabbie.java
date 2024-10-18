@@ -53,7 +53,7 @@ public class Cabbie extends Person {
      *
      *                 If the field is not valid, a message is printed and the field
      *                 is not updated.
-     * @throws InvalidPhoneNumberException 
+     * @throws InvalidPhoneNumberException
      */
     @Override
     public void update(String field, String newValue) throws IllegalArgumentException, InvalidPhoneNumberException {
@@ -83,12 +83,12 @@ public class Cabbie extends Person {
                 break;
             default:
                 validField = false;
-                throw new IllegalArgumentException ("");
-            }
+                throw new IllegalArgumentException("");
+        }
 
-            if (validField) {
-                System.out.println("Campo " + field + " foi atualizado com sucesso!");
-            }
+        if (validField) {
+            System.out.println("Campo " + field + " foi atualizado com sucesso!");
+        }
     }
 
     /**
